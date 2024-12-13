@@ -32,7 +32,7 @@ public class TokenFilter extends OncePerRequestFilter
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException
     {
-        String token = extractTokenFromHeader(request);
+        String token = tokenService.extractTokenFromHeader(request);
 
         if (token != null)
         {
@@ -49,22 +49,6 @@ public class TokenFilter extends OncePerRequestFilter
         }
 
         filterChain.doFilter(request, response);
-    }
-
-
-    /*
-     *  EXTRACT TOKEN FROM HEADER
-     *
-     */
-    private String extractTokenFromHeader(HttpServletRequest request)
-    {
-        String header = request.getHeader("Authorization");
-
-        if (header != null && header.startsWith("Bearer "))
-        {
-            return header.substring(7);
-        }
-        return null;
     }
 
 }
