@@ -9,6 +9,9 @@ public record OrderProductRegistrationDto(
         @NotNull(message = "User ID is mandatory!")
         UUID productId,
 
+        @NotNull(message = "Order ID is mandatory!")
+        UUID orderId,
+
         @NotBlank(message = "Product name is mandatory!")
         String name,
 
