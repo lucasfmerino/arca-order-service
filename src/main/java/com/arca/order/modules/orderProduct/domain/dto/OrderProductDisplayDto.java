@@ -9,7 +9,7 @@ public record OrderProductDisplayDto(
         UUID productId,
         String name,
         Double price,
-        Double quantity
+        Integer quantity
 )
 {
     public OrderProductDisplayDto(OrderProduct orderProduct)

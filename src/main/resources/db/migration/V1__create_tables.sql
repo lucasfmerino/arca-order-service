@@ -14,7 +14,7 @@ CREATE TABLE t_order_product (
     product_id BINARY(16) NOT NULL,
     name VARCHAR(255),
     price DOUBLE,
-    quantity DOUBLE,
+    quantity INT,
     order_id BINARY(16),
     created_at DATETIME,
     updated_at DATETIME,

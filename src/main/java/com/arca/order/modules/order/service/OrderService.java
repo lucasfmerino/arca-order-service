@@ -1,5 +1,6 @@
 package com.arca.order.modules.order.service;
 
+import com.arca.order.client.ProductClient;
 import com.arca.order.infra.security.TokenService;
 import com.arca.order.modules.order.domain.dto.OrderDisplayDto;
 import com.arca.order.modules.order.domain.dto.OrderDisplayToListDto;
@@ -7,6 +8,8 @@ import com.arca.order.modules.order.domain.dto.OrderUpdateDto;
 import com.arca.order.modules.order.domain.model.Order;
 import com.arca.order.modules.order.exception.OrderNotFoundException;
 import com.arca.order.modules.order.repository.OrderRepository;
+import com.arca.order.modules.orderProduct.domain.dto.OrderProductDisplayDto;
+import com.arca.order.modules.orderProduct.domain.dto.ProductToUpdateClientDto;
 import com.arca.order.modules.orderProduct.domain.model.OrderProduct;
 import com.arca.order.modules.orderStatus.OrderStatus;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +31,9 @@ public class OrderService
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    ProductClient productClient;
 
 
     public OrderService(OrderRepository orderRepository, TokenService tokenService)
@@ -51,6 +57,9 @@ public class OrderService
         newOrder.setUserId(userId);
         newOrder.setOrderStatus(OrderStatus.CREATED);
         newOrder.setOrderProducts(products);
+
+        // UPDATE PRODUCT
+        updateProductByOrder(new OrderDisplayDto(newOrder));
 
         return new OrderDisplayDto(orderRepository.save(newOrder));
     }
@@ -118,7 +127,29 @@ public class OrderService
             orderToUpdate.setOrderStatus(orderUpdateDto.orderStatus());
         }
 
+        // UPDATE PRODUCT
+        if(orderUpdateDto.orderStatus() == OrderStatus.CANCELED)
+        {
+            updateProductByOrder(new OrderDisplayDto(orderToUpdate));
+        }
+
         return new OrderDisplayDto(orderRepository.save(orderToUpdate));
     }
 
+
+    /*
+     *  UPDATE PRODUCT BY ORDER
+     *
+     */
+    public void updateProductByOrder(OrderDisplayDto order)
+    {
+        List<ProductToUpdateClientDto> updatedList = new ArrayList<>();
+
+        for(OrderProductDisplayDto product : order.products())
+        {
+            updatedList.add(new ProductToUpdateClientDto(product, order.orderStatus()));
+        }
+
+        productClient.updateProductByOrder(updatedList);
+    }
 }

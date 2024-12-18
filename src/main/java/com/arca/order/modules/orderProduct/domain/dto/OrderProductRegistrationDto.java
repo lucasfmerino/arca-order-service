@@ -19,7 +19,7 @@ public record OrderProductRegistrationDto(
         Double price,
 
         @NotNull(message = "Quantity is mandatory!")
-        Double quantity
+        Integer quantity
 )
 {
 }

@@ -5,5 +5,5 @@ public enum OrderStatus
     CREATED,
     PROCESSING,
     COMPLETED,
-    CANCELLED;
+    CANCELED;
 }

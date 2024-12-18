@@ -31,7 +31,7 @@ public class OrderProduct
 
     private Double price;
 
-    private Double quantity;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
