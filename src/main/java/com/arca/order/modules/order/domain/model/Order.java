@@ -1,7 +1,7 @@
 package com.arca.order.modules.order.domain.model;
 
-import com.arca.order.modules.orderStatus.OrderStatus;
 import com.arca.order.modules.orderProduct.domain.model.OrderProduct;
+import com.arca.order.modules.orderStatus.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
