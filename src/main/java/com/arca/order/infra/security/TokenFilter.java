@@ -36,10 +36,12 @@ public class TokenFilter extends OncePerRequestFilter
 
         if (token != null)
         {
+            request.setAttribute("AuthorizationToken", token);
+
             List<String> roles = tokenService.extractRolesFromToken(token);
 
             List<GrantedAuthority> authorities = roles.stream()
-                    .map(SimpleGrantedAuthority::new)
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                     .collect(Collectors.toList());
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(

@@ -22,4 +22,14 @@ public record ProductToUpdateClientDto(
                         : orderProductDisplayDto.quantity()
         );
     }
+
+    public ProductToUpdateClientDto(OrderProductRegistrationDto orderProductDisplayDto)
+    {
+        this(
+                orderProductDisplayDto.productId(),
+                orderProductDisplayDto.quantity()
+        );
+    }
+
+
 }

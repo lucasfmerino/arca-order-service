@@ -45,6 +45,12 @@ public class SecurityConfiguration
                     authorize.requestMatchers(HttpMethod.DELETE, "/api/order/**").hasAnyRole("WEB147", "WEB101");
                     authorize.requestMatchers(HttpMethod.GET, "/api/order/**").authenticated();
 
+                    // ORDER PRODUCT
+                    authorize.requestMatchers(HttpMethod.POST, "/api/order-products/**").hasAnyRole("WEB147", "WEB101");
+                    authorize.requestMatchers(HttpMethod.PUT, "/api/order-products/**").hasAnyRole("WEB147", "WEB101");
+                    authorize.requestMatchers(HttpMethod.DELETE, "/api/order-products/**").hasAnyRole("WEB147", "WEB101");
+                    authorize.requestMatchers(HttpMethod.GET, "/api/order-products/**").authenticated();
+
                     // OTHERS
                     authorize.anyRequest().authenticated();
                 })

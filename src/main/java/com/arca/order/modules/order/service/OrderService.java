@@ -58,9 +58,6 @@ public class OrderService
         newOrder.setOrderStatus(OrderStatus.CREATED);
         newOrder.setOrderProducts(products);
 
-        // UPDATE PRODUCT
-        updateProductByOrder(new OrderDisplayDto(newOrder));
-
         return new OrderDisplayDto(orderRepository.save(newOrder));
     }
 

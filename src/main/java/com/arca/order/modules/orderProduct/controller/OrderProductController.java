@@ -32,7 +32,7 @@ public class OrderProductController
      */
     @PostMapping()
     public ResponseEntity<List<OrderProductDisplayDto>> registerByList(
-            List<OrderProductRegistrationDto> registrationList,
+            @RequestBody List<OrderProductRegistrationDto> registrationList,
             UriComponentsBuilder uriComponentsBuilder
     )
     {

@@ -49,7 +49,7 @@ public class OrderController {
      */
     @GetMapping()
     public ResponseEntity<Page<OrderDisplayToListDto>> getAll(
-            @PageableDefault(size = 8, page = 0, sort = "description", direction = Sort.Direction.ASC)
+            @PageableDefault(size = 8, page = 0, sort = "createdAt", direction = Sort.Direction.ASC)
             Pageable pageable
     ) {
         return ResponseEntity.ok(orderService.getAll(pageable));
@@ -62,7 +62,7 @@ public class OrderController {
      */
     @GetMapping("/user")
     public ResponseEntity<Page<OrderDisplayToListDto>> getUserOrders(
-            @PageableDefault(size = 8, page = 0, sort = "description", direction = Sort.Direction.ASC)
+            @PageableDefault(size = 8, page = 0, sort = "createdAt", direction = Sort.Direction.ASC)
             Pageable pageable,
             HttpServletRequest request
     ) {

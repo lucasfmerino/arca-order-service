@@ -1,10 +1,12 @@
 package com.arca.order.modules.orderProduct.service;
 
+import com.arca.order.client.ProductClient;
 import com.arca.order.modules.order.domain.model.Order;
 import com.arca.order.modules.order.exception.OrderNotFoundException;
 import com.arca.order.modules.order.repository.OrderRepository;
 import com.arca.order.modules.orderProduct.domain.dto.OrderProductDisplayDto;
 import com.arca.order.modules.orderProduct.domain.dto.OrderProductRegistrationDto;
+import com.arca.order.modules.orderProduct.domain.dto.ProductToUpdateClientDto;
 import com.arca.order.modules.orderProduct.domain.model.OrderProduct;
 import com.arca.order.modules.orderProduct.repository.OrderProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +28,9 @@ public class OrderProductService
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private ProductClient productClient;
 
 
     /*
@@ -65,6 +70,9 @@ public class OrderProductService
             newOrderProducts.add(newProduct);
         }
 
+        // UPDATE PRODUCT
+        updateProductByOrder(registrationList);
+
         return newOrderProducts;
     }
 
@@ -76,6 +84,23 @@ public class OrderProductService
     public Page<OrderProductDisplayDto> findByOrderId(UUID orderId, Pageable pageable)
     {
         return orderProductRepository.findByOrderId(orderId, pageable).map(OrderProductDisplayDto::new);
+    }
+
+
+    /*
+     *  UPDATE PRODUCT BY ORDER
+     *
+     */
+    public void updateProductByOrder(List<OrderProductRegistrationDto> registrationList)
+    {
+        List<ProductToUpdateClientDto> updatedList = new ArrayList<>();
+
+        for(OrderProductRegistrationDto product : registrationList)
+        {
+            updatedList.add(new ProductToUpdateClientDto(product));
+        }
+
+        productClient.updateProductByOrder(updatedList);
     }
 
 
